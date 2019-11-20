@@ -1,0 +1,41 @@
+{
+  "name": "riskjs",
+  "description": "Risk lib for JS based on calvin456/VaR C++ code",
+  "version": "0.0.1",
+  "homepage": "https://github.com/vigor-ish/riskjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vigor-ish/riskjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vigor-ish/riskjs/issues"
+  },
+  "keywords": [
+    "riskjs",
+    "eigen",
+    "matrix",
+    "vector",
+    "monte carlo",
+    "risk",
+    "var"
+  ],
+  "author": "Pedro Reis Colaço <@prcolaco>",
+  "contributors": [],
+  "dependencies": {
+    "node-gyp": "^6.0.1"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.2",
+    "should": "^4.0.4"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/vigor-ish/riskjs/master/LICENSE"
+    }
+  ]
+}

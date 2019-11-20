@@ -1,0 +1,7 @@
+build/
+test/
+.travis.yml
+.npmignore
+Makefile
+appveyor.yml
+cpplint.py
