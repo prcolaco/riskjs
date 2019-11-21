@@ -1,14 +1,15 @@
 //rng.cpp
 
-#include<memory>
-#include<math.h>
-#include<cmath>
+#include <memory>
+#include <math.h>
+#include <cmath>
 
 #include <boost/math/distributions.hpp>
 
 #include "rng.h"
 
 using namespace std;
+
 
 copulaRng::copulaRng(unsigned int _d, rng& _rng_)
 :d(_d)
@@ -32,7 +33,7 @@ Vec copulaRng::getGaussiancopula(Eigen::MatrixXd C){
 
 	for(size_t i = 0;i < d;++i)
         sample.push_back(boost::math::cdf(dist,Z(i)));
-	
+
 	return sample;
 }
 
@@ -82,10 +83,10 @@ Vec copulaRng::getClaytoncopula(double gamma){
 // Gumbel
 Vec copulaRng::getGumbelcopula(double gamma){
 
-	double theta = -pow(-cos(M_PI/(2. * gamma)),gamma); 
+	double theta = -pow(-cos(M_PI/(2. * gamma)),gamma);
 
 	//1 dimension stable_dist(1./theta, 1.,gamma,0.)
-	double X = getOneStableDist<shared_ptr<GenFromDistr<rng>>>(_rng,1./gamma, 1.,theta,0.); 
+	double X = getOneStableDist<shared_ptr<GenFromDistr<rng>>>(_rng,1./gamma, 1.,theta,0.);
 
 	//d dimension uniform(0,1)
 	Eigen::VectorXd U = _rng->getXUniform(d);
@@ -94,7 +95,6 @@ Vec copulaRng::getGumbelcopula(double gamma){
 
 	for(size_t i = 0;i < d;++i)
         sample.push_back(exp(-pow(abs(log(abs(U(i)/X))) , 1./gamma)));
-	
+
 	return sample;
 }
-

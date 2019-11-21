@@ -1,5 +1,8 @@
 //rng.h
 
+#pragma once
+
+
 #include <memory>
 #include <random>
 #include <vector>
@@ -10,37 +13,14 @@
 
 #include "generate_rm_from_distr.h"
 
-using namespace std;
-
-#ifndef RANDOM_GEN_H
-#define RANDOM_GEN_H
 
 typedef std::vector<double> Vec;
 
 static std::uniform_real_distribution<double> udist(0., 1.);
 
 //! Mersenne-Twister pseudo random number generator
-class rng{
-
-public:
-    rng(){
-    //set seed
-        generator.seed(seed_val);
-    }
-    ~rng(){}
-	//! Go to next number in pseudo-sequence
-    double operator()(){
-
-        return generator();
-    }
-
-    inline uint32_t min();
-    inline uint32_t max();
-
-private:
-    std::mt19937 generator;
-    uint32_t seed_val=12411;
-
+struct rng : std::mt19937 {
+    explicit rng ( std::mt19937::result_type val = 12411 ){ seed(val); }
 };
 
 /*!
@@ -92,12 +72,8 @@ public:
 
 private:
 	unsigned int d;
-	shared_ptr<GenFromDistr<rng>> _rng;
+	std::shared_ptr<GenFromDistr<rng>> _rng;
 };
-
-inline uint32_t rng::min(){return generator.min();}
-
-inline uint32_t rng::max(){return generator.max();}
 
 /*! Simulate one stable distr value
 
@@ -134,5 +110,3 @@ double getOneStableDist(T& _rng_, double alpha, double beta, double gamma = 1., 
 
 	return X == 0 ? Z : X;
 }
-
-#endif //RANDOM_GEN_H
