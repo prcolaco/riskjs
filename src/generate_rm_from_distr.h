@@ -1,9 +1,7 @@
 //generate_rm_from_distr.h
 
-#include <random>
+#pragma once
 
-#ifndef DIST_RANDOM_GEN_H
-#define DIST_RANDOM_GEN_H
 
 static std::normal_distribution<double> gaussian(0,1);
 
@@ -101,6 +99,3 @@ public:
 private:
     T _rng_;
 };
-
-#endif //DIST_RANDOM_GEN_H
-

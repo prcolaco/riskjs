@@ -1,5 +1,8 @@
 //path.h
 
+#pragma once
+
+
 #include<iostream>
 #include<vector>
 
@@ -8,8 +11,6 @@
 using namespace Eigen;
 using namespace std;
 
-#ifndef PATH_H
-#define PATH_H
 
 typedef std::vector<double> Vec;
 typedef std::vector<std::vector<double>> Mat;
@@ -116,6 +117,3 @@ private:
 	double beta;
 	double gamma;
 };
-
-
-#endif //PATH_H

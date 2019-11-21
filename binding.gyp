@@ -15,9 +15,8 @@
         'src/var_model.cpp'
       ],
       'include_dirs': [
-        'deps',
-        'deps/eigen3',
-        'include'
+        'include',
+        'include/eigen3'
       ],
       'conditions': [
         ['OS=="win"', {

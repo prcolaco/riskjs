@@ -1,13 +1,14 @@
 //var_model.h
 
+#pragma once
+
+
 #include <vector>
 #include <map>
 #include <iostream>
 
 #include <boost/math/distributions/normal.hpp>
 
-#ifndef VAR_MODELS_H
-#define VAR_MODELS_H
 
 using namespace boost::math;
 using namespace std;
@@ -215,6 +216,3 @@ private:
 	double beta;
 	double u;
 };
-
-#endif //VAR_MODELS_H
-

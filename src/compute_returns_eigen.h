@@ -1,5 +1,8 @@
 //compute_returns_eigen.h
 
+#pragma once
+
+
 #include <vector>
 #include <math.h>
 #include <memory>
@@ -9,8 +12,6 @@
 using namespace Eigen;
 using namespace std;
 
-#ifndef COMPUTE_RTNS_H
-#define COMPUTE_RTNS_H
 
 typedef std::vector<double> Vec;
 typedef std::vector<Vec> Mat;
@@ -19,8 +20,8 @@ Vec computeRiskReturn(const Vec& assetReturns); // func declaration
 
 /*!Compute returns, mean, std dev
 
-   Assume daily return	
-*/ 
+   Assume daily return
+*/
 class ComputeReturn{
 
 public:
@@ -62,7 +63,7 @@ public:
 
      	Use Cholesky decomposition \f$X = LL^T\f$
 
-     	ie. 
+     	ie.
 
 		\f$C = AA^T\f$
 
@@ -71,10 +72,10 @@ public:
 	void correlReweightedRtns(const Eigen::MatrixXd& Chat);
 
 	/*! \brief Compute PCA Principal Component Analysis
-		
+
 	Principal Component up to 99%
 
-	    
+
   	*/
 	Eigen::MatrixXd computePC();
 
@@ -147,5 +148,3 @@ inline unsigned int ComputeReturn::getWindow() const {return k;}
 
 inline Mat ComputeReturn::getReturns() const {return mAssetReturns;}
 inline Eigen::MatrixXd ComputeReturn::getVarCov() const {return VarCov;}
-
-#endif //COMPUTE_RTNS_H

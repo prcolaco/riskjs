@@ -1,5 +1,8 @@
 //ptf_var.h
 
+#pragma once
+
+
 #include <memory>
 
 #include "portfolio.h"
@@ -9,8 +12,6 @@
 
 using namespace std;
 
-#ifndef PTF_VAR_H
-#define PTF_VAR_H
 
 //! Compute ptf's VaR using parametric approach
 class VaRPtfCompute{
@@ -145,7 +146,7 @@ public:
         }
 
         _engine.setValues(rtns,sdevs);
-        
+
         double n = 1.e+05;
         underlyingProcess up = Student;
         size_t dofreedom(ptf->getComponentReturns(0).size()-2);
@@ -154,13 +155,13 @@ public:
         //double np = 1.e+05;
         //underlyingProcess upg = Gaussian;
         //Mat simRtns = _engine.DoMultiSimulation(np,upg);
-       
-        double historicalVaR = model(0,ptf->getReturns()); 
+
+        double historicalVaR = model(0,ptf->getReturns());
         cout << "historicalVaR: " << historicalVaR << endl;
 
         ptf->setReturns(simRtns); ptf->OverwriteComponentPtfRtn(); ptf->computeRtn(nbAssets);
 
-        double MCVaR = model(0,ptf->getReturns()); 
+        double MCVaR = model(0,ptf->getReturns());
 
         return MCVaR;
     };
@@ -221,7 +222,3 @@ private:
 };
 
 inline void VaRPtfCompute::setAlpha(double _alpha){alpha = _alpha;}
-
-#endif //PTF_VAR_H
-
-

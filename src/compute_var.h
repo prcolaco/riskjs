@@ -1,19 +1,20 @@
 //compute_var.h
 
-#include<iostream>
+#pragma once
+
+
+#include <iostream>
 
 #include <boost/math/distributions/students_t.hpp>
 
-#include"var_bridge.h"
-#include"compute_returns_eigen.h"
-#include"bootstrap.h"
-#include"mc_engine.h"
+#include "var_bridge.h"
+#include "compute_returns_eigen.h"
+#include "bootstrap.h"
+#include "mc_engine.h"
 
 using namespace boost::math;
 using namespace std;
 
-#ifndef COMPUTE_VARS_H
-#define COMPUTE_VARS_H
 
 //! Compute VaR
 
@@ -27,7 +28,7 @@ public:
 
 	void setAlpha(double alpha){model.setAlpha(alpha);}
 	void setPeriod(unsigned int period){computeReturn->setPeriod(period);}
-	
+
     //!compute VaR using whole path 1x overload
 	virtual double computeVaR(size_t p = 0) = 0;
 
@@ -57,7 +58,7 @@ public:
 	virtual ~VaRParamCompute(){}
 
 	double computeVaR(size_t p = 0){
-      
+
         std::vector<double> _rtns = VaRCompute<T, U>::computeReturn->getReturns(p);
 
         unsigned int m(VaRCompute<T, U>::computeReturn->getRollingMean(p).size());
@@ -471,5 +472,3 @@ double ExpectedShortfall(T& _var, double alpha = .05, size_t computationPoint = 
 
 	return es/ alpha/ 100.;
 };
-
- #endif //COMPUTE_VARS_H

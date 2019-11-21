@@ -1,8 +1,11 @@
 // bootstrap.h
 
-#include<vector>
-#include<map>
-#include<memory>
+#pragma once
+
+
+#include <vector>
+#include <map>
+#include <memory>
 #include <functional>
 
 #include <boost/accumulators/accumulators.hpp>
@@ -13,8 +16,6 @@
 using namespace std;
 using namespace boost::accumulators;
 
-#ifndef BOOTSTRAP_H
-#define BOOTSTRAP_H
 
 /*! Compute historical VaR with bootstrap resampling
 
@@ -80,5 +81,3 @@ private:
     rng _rng;
 
 };
-
-#endif //BOOTSTRAP_H

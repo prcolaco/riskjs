@@ -1,8 +1,8 @@
 //pca.h
 //https://github.com/ihar/EigenPCA/blob/master/pca.h
 
-#ifndef PCA_H_
-#define PCA_H_
+#pragma once
+
 
 #include <vector>
 #include <Eigen/Dense>
@@ -18,7 +18,7 @@ private:
         _is_corr;           // PCA with correlation matrix, not covariance
   std::string
         _method;            // svd, cor, cov
-  std::vector<unsigned int> 
+  std::vector<unsigned int>
       _eliminated_columns;  // Numbers of eliminated columns
   std::vector<float>  _sd,  // Standard deviation of each component
                       _prop_of_var,   // Proportion of variance
@@ -30,10 +30,10 @@ private:
 public:
   //! Initializing values and performing PCA
   /*!
-    The main method for performin Principal Component Analysis  
+    The main method for performin Principal Component Analysis
     \param  x     Initial data matrix
-    \param  nrows Number of matrix rows  
-    \param  ncols Number of matrix cols   
+    \param  nrows Number of matrix rows
+    \param  ncols Number of matrix cols
     \param  is_corr   Correlation matrix will be used instead of covariance matrix
     \param  is_center Whether the variables should be shifted to be zero centered
     \param  is_scale  Whether the variables should be scaled to have unit variance
@@ -41,7 +41,7 @@ public:
       0 if everything is Ok
       -1 if there were some errors
   */
-  int Calculate(std::vector<float>& x, const unsigned int& nrows, const unsigned int& ncols, 
+  int Calculate(std::vector<float>& x, const unsigned int& nrows, const unsigned int& ncols,
           const bool is_corr = true, const bool is_center = true, const bool is_scale = true);
   //! Return number of rows in initial matrix
   /*!
@@ -69,10 +69,10 @@ public:
   bool is_scale(void);
   //! Method for calculation of principal components
   /*!
-    There are different methods used. The most used is SVD. 
+    There are different methods used. The most used is SVD.
     But in some cases it may be correlation or covariance matrices.
-    If 
-    \result 
+    If
+    \result
           "svd" - PCA with singular value decomposition
           "cor" - PCA with correlation matrix
           "cov" - PCA with covariance matrix
@@ -81,7 +81,7 @@ public:
   //! Returns numbers of eliminated columns
   /*!
     If standard deviation of a column is equal to 0, the column shoud be rejected,
-    or PCA will fail. 
+    or PCA will fail.
     \result Numbers of eliminated columns, empty vector otherwise
   */
   std::vector<unsigned int> eliminated_columns(void);
@@ -90,7 +90,7 @@ public:
     \result Vector of standard deviation for each principal component:
             1st element is sd for 1st PC, 2nd - for 2nd PC and so on.
   */
-  std::vector<float> sd(void);    
+  std::vector<float> sd(void);
   //! Proportion of variance
   /*!
     \result Vector of variances for each component
@@ -103,14 +103,14 @@ public:
   std::vector<float> cum_prop(void);
   //! Principal component by the Kaiser criterion
   /*!
-    Number of the last component with eigenvalue greater than 1.  
+    Number of the last component with eigenvalue greater than 1.
     \result Number of the first components we should retain defined by the Kaiser criterion
   */
   unsigned int kaiser(void);
   //! 95% threshold
   /*!
     Retain only PC which cumulative proportion is less than 0.95
-    \result Number of PCs should be retain with the 95% threshold criterion 
+    \result Number of PCs should be retain with the 95% threshold criterion
   */
   unsigned int thresh95(void);
   //! Rotated values (scores)
@@ -124,5 +124,3 @@ public:
   //! Class destructor
   ~Pca(void);
 };
-
-#endif

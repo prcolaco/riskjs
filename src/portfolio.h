@@ -1,5 +1,8 @@
 //portfolio.h
 
+#pragma once
+
+
 #include <tuple>
 #include<memory>
 #include<vector>
@@ -14,8 +17,6 @@
 using namespace boost::accumulators;
 using namespace std;
 
-#ifndef PORTFOLIO_H
-#define PORTFOLIO_H
 
 typedef std::vector<pair<unsigned int, shared_ptr<Instrument>>> Ptf;
 
@@ -168,9 +169,3 @@ inline unsigned int Portfolio::getPeriod() const {return cr->getPeriod();}
 inline unsigned int Portfolio::getWindow() const {return cr->getWindow();}
 
 inline bool Portfolio::isFixedIncome() const {return isFI;}
-
-#endif //PORTFOLIO_H
-
-
-
-

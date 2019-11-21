@@ -1,10 +1,11 @@
 //var_bridge.h
 
+#pragma once
+
+
 #include<memory>
 #include"var_model.h"
 
-#ifndef VAR_MODELS_BRIGE_H
-#define VAR_MODELS_BRIGE_H
 
 class VaRBridge{
 
@@ -45,5 +46,3 @@ inline double VaRBridge::operator()(double _meanReturn,
 	return model->operator()(_meanReturn, _sigmatminus1, _returnt);
 
 }
-
-#endif //VAR_MODELS_BRIGE_H

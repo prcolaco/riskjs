@@ -1,5 +1,8 @@
 //mc_engine.h
 
+#pragma once
+
+
 #include<vector>
 #include<memory>
 
@@ -14,8 +17,6 @@ using namespace boost::math;
 using namespace Eigen;
 using namespace std;
 
-#ifndef MC_ENGINE_H
-#define MC_ENGINE_H
 
 enum matType{Cholesky, pc}; //!pc : principal component
 enum underlyingProcess{Gaussian, Student}; //!Student's t-distr
@@ -51,7 +52,7 @@ public:
 		for(size_t i=0;i < _paths.size();++i)
             paths_.push_back(_paths[i]);
 
-		mt == Cholesky ? m = _A.rows() : m = _A.cols(); 
+		mt == Cholesky ? m = _A.rows() : m = _A.cols();
 
 		A.resize(_A.rows(),_A.cols());
 		A = _A;
@@ -309,5 +310,3 @@ private:
     Eigen::MatrixXd C;
 	shared_ptr<copulaRng> _rng;
 };
-
-#endif //MC_ENGINE_H

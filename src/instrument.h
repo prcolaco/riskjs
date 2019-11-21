@@ -1,15 +1,16 @@
 //instrument.h
 
+#pragma once
+
+
 #include<vector>
 
 using namespace std;
 
-#ifndef INSTRUMENTS_H
-#define INSTRUMENTS_H
 
 typedef std::vector<double> Vec;
 
-/*! Does not attempt to make full re-evaluation on the ptf. 
+/*! Does not attempt to make full re-evaluation on the ptf.
 
 	Use approximation approach instead
 */
@@ -83,5 +84,3 @@ private:
 	double convexity;
 	durationType dt;
 };
-
-#endif //INSTRUMENTS_H
