@@ -5,17 +5,17 @@
       'sources': [
         'src/RiskJS.cpp',
         'src/ptf_mc_var.cpp',
-        # 'src/compute_returns_eigen.cpp',
-        # 'src/instrument.cpp',
-        # 'src/path.cpp',
-        # 'src/pca.cpp',
-        # 'src/portfolio.cpp',
-        # 'src/ptf_var.cpp',
-        # 'src/rng.cpp',
-        # 'src/var_model.cpp'
+        'src/compute_returns_eigen.cpp',
+        'src/instrument.cpp',
+        'src/path.cpp',
+        'src/pca.cpp',
+        'src/portfolio.cpp',
+        'src/ptf_var.cpp',
+        'src/rng.cpp',
+        'src/var_model.cpp'
       ],
       'include_dirs': [
-        'deps/boost',
+        'deps',
         'deps/eigen3',
         'include'
       ],
