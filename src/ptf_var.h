@@ -157,7 +157,7 @@ public:
         //Mat simRtns = _engine.DoMultiSimulation(np,upg);
 
         double historicalVaR = model(0,ptf->getReturns());
-        cout << "historicalVaR: " << historicalVaR << endl;
+        // cout << "historicalVaR: " << historicalVaR << endl;
 
         ptf->setReturns(simRtns); ptf->OverwriteComponentPtfRtn(); ptf->computeRtn(nbAssets);
 

@@ -11,8 +11,9 @@
 namespace RiskJS {
 
 // typedef for Javascript array of arrays of strings
-typedef std::vector< std::vector<std::string>> dataArray;
+typedef std::vector<std::string> priceRow;
+typedef std::vector<priceRow> priceData;
 
-double portfolioMonteCarloVaR(dataArray data);
+double portfolioMonteCarloVaR(priceData data);
 
-}
+}  // namespace RiskJS

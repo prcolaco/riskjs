@@ -19,6 +19,30 @@ $ npm install riskjs
 $ npm install riskjs --msvs_version=2012
 ```
 
+## Testing
+
+There is a small but important suite of tests to check that this code runs correctly.
+
+```bash
+$ npm run test
+
+> riskjs@0.0.1 test ./vigorish/riskjs
+> mocha test/*.js
+
+Loading data from "./test/data.csv"
+
+
+  Portfolio Monte Carlo VaR
+    ✓ RiskJS.portfolioMonteCarloVaR() should be a function
+    ✓ Should throw error when tried with wrong arguments (103ms)
+    ✓ Should return a string with the same result value (104ms)
+
+
+  3 passing (213ms)
+
+
+```
+
 #### Dependencies
 
 Included in the project are both dependencies to build this library, please check `include` folder.
