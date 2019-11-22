@@ -17,6 +17,9 @@
 #include "portfolio.h"
 #include "ptf_var.h"
 
+#include <boost/math/special_functions/erf.hpp>
+using boost::math::erfc_inv;
+
 namespace RiskJS {
 
 
@@ -61,67 +64,37 @@ double portfolioMonteCarloVaR(priceData data) {
 	                prices[i].push_back(_prices[i][j]);
 	        }
 		}
-	  unsigned int windowsize = prices[0].size()-2;
-	  shared_ptr<ComputeReturn> cr(new ComputeReturn(prices,1,windowsize,true));
-		// 252 / 4 = 63 - 3 months
-    // 4 * 252 = 1008 use 4 years of data to compute mean, and std dev
+    unsigned int windowsize = prices[0].size()-2;
+    std::shared_ptr<ComputeReturn> cr(new ComputeReturn(prices,1,windowsize,true));
 
-    //-------------------------------------------------------------------------
-    // Compute Monte Carlo VaR
-
-
-		// Simulate stock rtn using AR(1)xGARCH(1,1) through brute force Monte-Carlo
-
-		vector<AR1xGARCH11> processes(2);
-    processes[0] = AR1xGARCH11(); // DJIA
-    processes[1] = AR1xGARCH11(); // GSPC
-    // processes[0] = AR1xGARCH11(-0.0003114, -0.0693, 0.01854, 0.10150, 0.88374); // DJIA
-    // processes[1] = AR1xGARCH11(-0.0003515,-0.0729,0.01979, 0.09502, 0.89028); // GSPC
-    // processes[2] = AR1xGARCH11(-0.0004741,-0.1041,0.02788, 0.08605, 0.89754); // NDX
-    // processes[3] = AR1xGARCH11(-1.37e-17, 0.,0.02614, 0.09003, 0.89950); // GDAXI
-    // processes[4] = AR1xGARCH11(2.348e-17,0.,0.02476, 0.08731, 0.90240); // FCHI
-    // processes[5] = AR1xGARCH11(2.468e-17,0.,0.02987, 0.07847, 0.91352); // SSEC
-    // processes[6] = AR1xGARCH11(5.382e-18,0.,2.166e+00, 4.902e-01, 4.990e-15); // SENSEX
-
-    Path1x1 process;
-
-		HistoricalVaR var1;
-
-    // Case of full replication of index - DJIA,GSPC,NDX,GDAXI,FCHI,SSEC,SENSEX : 7 indices
-
-		double a = double(1./2.);
-
-		vector<double> weights{a,a}; // initialization. Equi-weighted asset for mere convenience
-
-		Ptf _ptf;
-
-		for(unsigned int i = 0;i < 2;++i){
+    // create portfolio
+	double a = double(1./m);
+	std::vector<double> weights{a,a}; //initialization. Equi-weighted asset for mere convenience
+	Ptf _ptf;
+	for(size_t i = 0;i < m;++i){
         shared_ptr<Instrument> instrument(new DeltaOne());
-        auto p = make_pair(i,instrument);
-				_ptf.push_back(p);
-		}
+        auto p = std::make_pair(i,instrument);
+		_ptf.push_back(p);
+	}
+	shared_ptr<Portfolio> ptf(new Portfolio(_ptf, weights, cr, false, 1.e+07));
 
-		shared_ptr<Portfolio> ptf(new Portfolio(_ptf, weights, cr, false, 1.e+07));
+    HistoricalVaR model;
 
-		rng _rng;
+    double alphatest = .95; // set alpha level, example 0.9 for 95% CVaR
 
-    VaRPtfMCCompute<HistoricalVaR, AR1xGARCH11> VaRMonteCarlo(ptf,var1, processes, _rng);
+   // CVaRMonteCarlo
+   // Simulate crypto rtn using AR(1)xGARCH(1,1) through brute force Monte-Carlo
+	std::vector<AR1xGARCH11> processes(2);
+    processes[0] = AR1xGARCH11(); // first crypto asset AR1xGARCH11( 0.,0.5,omega, alpha=.24, beta=.76); note beta, alpha, omega correspond to python arch_model
+    processes[1] = AR1xGARCH11(); // 2nd crypto asset
+    Path1x1 process;
+    rng _rng;
+    VaRPtfMCCompute<HistoricalVaR, AR1xGARCH11> VaRMonteCarlo(ptf,model, processes, _rng, 1.0-alphatest);
+    double CVaRMonteCarlo = VaRMonteCarlo.computeVaR();
+	  cout << "CVaRMonteCarlo: " << CVaRMonteCarlo << endl;
 
-    double VaRout = VaRMonteCarlo.computeVaR();
+    return CVaRMonteCarlo;
 
-		// cout << "Monte Carlo VaR: " << VaRout << endl;
-    //
-		// simulate portfolio rtn instead instead of component
-		//
-		// VaRMonteCarloCompute<Portfolio, HistoricalVaR, Path1x1> VaRMonteCarlo1(ptf,var1, process, _rng);
-		//
-		// cout << "Monte Carlo VaR - ptf rtn: " << VaRMonteCarlo1.computeVaR() << endl;
-		//
-		// Compute whole path
-		//
-		// Vec myPath = VaRMonteCarlo.computeVaRWholePath();
-
-    return VaRout;
-}
+  } 
 
 }

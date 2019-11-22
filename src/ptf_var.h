@@ -1,8 +1,5 @@
 //ptf_var.h
 
-#pragma once
-
-
 #include <memory>
 
 #include "portfolio.h"
@@ -155,9 +152,8 @@ public:
         //double np = 1.e+05;
         //underlyingProcess upg = Gaussian;
         //Mat simRtns = _engine.DoMultiSimulation(np,upg);
-
-        double historicalVaR = model(0,ptf->getReturns());
-        // cout << "historicalVaR: " << historicalVaR << endl;
+     //   double historicalVaR = model(0,ptf->getReturns()); 
+      //  cout << "historicalCVaR: " << historicalVaR << endl;
 
         ptf->setReturns(simRtns); ptf->OverwriteComponentPtfRtn(); ptf->computeRtn(nbAssets);
 

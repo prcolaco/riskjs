@@ -1,8 +1,5 @@
 //portfolio.h
 
-#pragma once
-
-
 #include <tuple>
 #include<memory>
 #include<vector>
@@ -67,10 +64,10 @@ public:
 protected:
 
 	//! w' * R - Need to account for approx of asset return : delta, gamma, etc
-	void computeMeanPtfRtn(){computeRiskReturn(ptfRtns)[0];};
+	void computeMeanPtfRtn(){ptfMeanRtn = computeRiskReturn(ptfRtns)[0];};
 
 	//! w' * sigma * w - Need to account for approx of asset return : delta, gamma, etc
-	void computerPtfSdev(){sqrt(computeRiskReturn(ptfRtns)[1]);};
+	void computerPtfSdev(){ptfSdev = sqrt(computeRiskReturn(ptfRtns)[1]);};
 
 	//! \result component ptf return
 	void ComputeComponentPtfRtn(){
