@@ -4,7 +4,10 @@
   "version": "0.0.1",
   "homepage": "https://github.com/vigor-ish/riskjs",
   "main": "index.js",
+  "gypfile": true,
   "scripts": {
+    "build": "node-gyp rebuild",
+    "clean": "node-gyp clean",
     "test": "mocha test/*.js"
   },
   "repository": {
@@ -26,10 +29,10 @@
   "author": "Pedro Reis Colaço <@prcolaco>",
   "contributors": [],
   "dependencies": {
+    "bindings": "^1.5.0",
     "node-gyp": "^6.0.1"
   },
   "devDependencies": {
-    "bindings": "^1.5.0",
     "csv-parse": "^4.8.2",
     "mocha": "^6.2.2",
     "should": "^4.0.4"
