@@ -1,8 +1,11 @@
 //portfolio.h
 
+#pragma once
+
+
 #include <tuple>
-#include<memory>
-#include<vector>
+#include <memory>
+#include <vector>
 #include <algorithm>
 
 #include <boost/accumulators/accumulators.hpp>
