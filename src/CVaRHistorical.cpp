@@ -27,7 +27,7 @@ using namespace Eigen;
 using namespace std;
 
 
-double portfolioMonteCarloVaR(priceData data) {
+double CVaRHistorical(priceData data) {
     // Remove lines with missing values
     size_t n(data.size() - 1);
     size_t m(data[0].size() - 1);
@@ -82,19 +82,15 @@ double portfolioMonteCarloVaR(priceData data) {
 
     double alphatest = .95; // set alpha level, example 0.9 for 95% CVaR
 
-   // CVaRMonteCarlo
-   // Simulate crypto rtn using AR(1)xGARCH(1,1) through brute force Monte-Carlo
-	std::vector<AR1xGARCH11> processes(2);
-    processes[0] = AR1xGARCH11(); // first crypto asset AR1xGARCH11( 0.,0.5,omega, alpha=.24, beta=.76); note beta, alpha, omega correspond to python arch_model
-    processes[1] = AR1xGARCH11(); // 2nd crypto asset
-    Path1x1 process;
-    rng _rng;
-    VaRPtfMCCompute<HistoricalVaR, AR1xGARCH11> VaRMonteCarlo(ptf,model, processes, _rng, 1.0-alphatest);
-    double CVaRMonteCarlo = VaRMonteCarlo.computeVaR();
-	  cout << "CVaRMonteCarlo: " << CVaRMonteCarlo << endl;
+    // CVaRhistorical
+    model.setAlpha(1.0-alphatest);
+    double CVaRHistorical = model(0,ptf->getReturns()); 
+    cout << "CVaRHistorical: " << CVaRHistorical << endl;
 
-    return CVaRMonteCarlo;
+    return CVaRHistorical;
 
-  } 
+    } 
 
 }
+
+

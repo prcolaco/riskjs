@@ -187,7 +187,7 @@ double HistoricalVaR::operator()(double _sigmatminus1,
 	unsigned int c(alpha * T);
 	c == 0 ? c : c-= 1;
 
-	double tmp;
+	double tmp = 0.0;
 
 	int input(ws);
 
@@ -260,6 +260,19 @@ double HistoricalVaR::operator()(double _sigmatminus1,
             std::sort(_wgthRtns.begin(), _wgthRtns.end());
 
             tmp = _wgthRtns[c];
+        }
+
+        break;
+
+    case 3:
+        {
+            // CVaR
+            std::sort(_returns.begin(), _returns.end());
+
+            for(unsigned int i = 0; i<=c; ++i){
+                tmp += _returns[i];
+            }
+            tmp /= (double)c+1.0;
         }
 
         break;

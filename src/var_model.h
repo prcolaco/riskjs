@@ -1,8 +1,5 @@
 //var_model.h
 
-#pragma once
-
-
 #include <vector>
 #include <map>
 #include <iostream>
@@ -141,13 +138,13 @@ private:
 
 };
 
-enum WeightingScheme {none, hybrid, hw}; //hw Hull-White
+enum WeightingScheme {none, hybrid, hw, CVaR}; //hw Hull-White
 
 //! Compute VaR using historical method (histogram method)
 class HistoricalVaR : public NoneParametricVaR {
 
 public:
-	HistoricalVaR(double _alpha = .05, double _lambda = .98, WeightingScheme _ws = none);
+	HistoricalVaR(double _alpha = .05, double _lambda = .98, WeightingScheme _ws = CVaR);
 	virtual ~HistoricalVaR(){}
 	HistoricalVaR(const HistoricalVaR& other);
 
