@@ -13,23 +13,23 @@ const data = csv(fs.readFileSync(source, 'utf8'), {
 });
 // console.log(data);
 
-describe('Portfolio Monte Carlo VaR', () => {
+describe('CVaR Monte Carlo', () => {
   var value;
 
-  it('RiskJS.portfolioMonteCarloVaR() should be a function', () => {
-    RiskJS.portfolioMonteCarloVaR.should.be.a.Function;
+  it('RiskJS.CVaRMonteCarlo() should be a function', () => {
+    RiskJS.CVaRMonteCarlo.should.be.a.Function;
   });
 
   it('Should throw error when tried with wrong arguments', () => {
-    (() => RiskJS.portfolioMonteCarloVaR()).should.throw('needs one argument with the price data array');
-    (() => RiskJS.portfolioMonteCarloVaR(0)).should.throw('needs one argument with the price data array');
-    (() => value = RiskJS.portfolioMonteCarloVaR(data)).should.not.throw();
+    (() => RiskJS.CVaRMonteCarlo()).should.throw('needs three arguments');
+    (() => RiskJS.CVaRMonteCarlo(data, [0.5,0.5])).should.throw('needs three arguments');
+    (() => value = RiskJS.CVaRMonteCarlo(data, [0.5,0.5], 0.95)).should.not.throw();
   });
 
   it('Should return a string with the same result value', () => {
-    const res = RiskJS.portfolioMonteCarloVaR(data);
+    const res = RiskJS.CVaRMonteCarlo(data, [0.5,0.5], 0.95);
     res.should.be.a.String;
     res.should.equal(value);
-    // console.log('Portfolio Monte Carlo VaR = %s', res);
+    // console.log('CVaR Monte Carlo = %s', res);
   });
 });

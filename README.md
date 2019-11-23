@@ -1,6 +1,13 @@
 # RiskJS
 
-The goal of this project is to port [Calvin456/VaR](https://github.com/calvin456/VaR) library into JavaScript for Value at Risk calculation.
+The goal of this project is to port [Calvin456/VaR](https://github.com/calvin456/VaR) library into JavaScript for Portfolio Value at Risk calculation.
+
+This library for now includes CVaR computation using the following methods:
+- Historical
+- Monte Carlo
+- Variance Covariance (used now in Vigor project)
+
+Many other quantitative finance computations might be added in the future to facilitate the use of such functionality in JavaScript Blockchain Oracles.
 
 This is part of our team work to participate in LiquidApps Global Hackathon 2019.
 
@@ -26,21 +33,31 @@ There is a small but important suite of tests to check that this code runs corre
 ```bash
 $ npm run test
 
-> riskjs@0.0.1 test ./vigorish/riskjs
+> riskjs@0.0.5 test ./vigorish/riskjs
 > mocha test/*.js
 
 Loading data from "./test/data.csv"
+Loading data from "./test/data.csv"
+Loading data from "./test/data.csv"
 
 
-  Portfolio Monte Carlo VaR
-    ✓ RiskJS.portfolioMonteCarloVaR() should be a function
-    ✓ Should throw error when tried with wrong arguments (103ms)
-    ✓ Should return a string with the same result value (104ms)
+  CVaR Historical
+    ✓ RiskJS.CVaRHistorical() should be a function
+    ✓ Should throw error when tried with wrong arguments
+    ✓ Should return a string with the same result value
+
+  CVaR Monte Carlo
+    ✓ RiskJS.CVaRMonteCarlo() should be a function
+    ✓ Should throw error when tried with wrong arguments (111ms)
+    ✓ Should return a string with the same result value (99ms)
+
+  CVaR Variance Covariance
+    ✓ RiskJS.CVaRVarianceCovariance() should be a function
+    ✓ Should throw error when tried with wrong arguments
+    ✓ Should return a string with the same result value
 
 
-  3 passing (213ms)
-
-
+  9 passing (221ms)
 ```
 
 #### Dependencies
