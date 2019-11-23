@@ -4,7 +4,9 @@
       'target_name': 'riskjs',
       'sources': [
         'src/RiskJS.cpp',
-        'src/ptf_mc_var.cpp',
+        'src/CVaRHistorical.cpp',
+        'src/CVaRMonteCarlo.cpp',
+        'src/CVaRVarianceCovariance.cpp',
         'src/compute_returns_eigen.cpp',
         'src/instrument.cpp',
         'src/path.cpp',

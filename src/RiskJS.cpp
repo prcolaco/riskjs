@@ -9,13 +9,13 @@
 
 #include <node.h>
 
-#include "ptf_mc_var.h"
+#include "CVaR.h"
 
 
 namespace RiskJS {
 
 
-void JS_portfolioMonteCarloVaR(const v8::FunctionCallbackInfo<v8::Value>& info) {
+void JS_CVaRMonteCarlo(const v8::FunctionCallbackInfo<v8::Value>& info) {
     v8::Isolate* isolate = info.GetIsolate();
 
     // Check the number and type of arguments passed
@@ -29,9 +29,12 @@ void JS_portfolioMonteCarloVaR(const v8::FunctionCallbackInfo<v8::Value>& info) 
     }
 
     // Compute price data array and call monte carlo var
-    std::string varOut;
+    std::string cvarOut;
     try {
-        priceData data;
+        priceData rawPrices;
+        weightData weights;
+        double alphatest;
+
         v8::Local<v8::Array> jsArr = v8::Local<v8::Array>::Cast(info[0]);
         for (int r = 0; r < jsArr->Length(); r++) {
             priceRow row;
@@ -40,11 +43,11 @@ void JS_portfolioMonteCarloVaR(const v8::FunctionCallbackInfo<v8::Value>& info) 
                 std::string elem(*v8::String::Utf8Value(isolate, jsRow->Get(c)));
                 row.push_back(elem);
             }
-            data.push_back(row);
+            rawPrices.push_back(row);
         }
 
         // Call our function
-        varOut = std::to_string(portfolioMonteCarloVaR(data));
+        cvarOut = std::to_string(CVaRMonteCarlo(rawPrices, weights, alphatest));
     } catch (const std::exception& e) {
         // Throw an Error that is passed back to JavaScript
         std::stringstream msg;
@@ -56,11 +59,11 @@ void JS_portfolioMonteCarloVaR(const v8::FunctionCallbackInfo<v8::Value>& info) 
     }
 
     // Return our result
-    info.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, varOut.c_str(), v8::NewStringType::kNormal).ToLocalChecked());
+    info.GetReturnValue().Set(v8::String::NewFromUtf8(isolate, cvarOut.c_str(), v8::NewStringType::kNormal).ToLocalChecked());
 }
 
 void Init(v8::Local<v8::Object> exports) {
-    NODE_SET_METHOD(exports, "portfolioMonteCarloVaR", JS_portfolioMonteCarloVaR);
+    NODE_SET_METHOD(exports, "CVaRMonteCarlo", JS_CVaRMonteCarlo);
 }
 
 }  // namespace RiskJS

@@ -6,7 +6,7 @@
 
 #include <Eigen/Dense>
 
-#include "ptf_mc_var.h"
+#include "CVaR.h"
 
 #include "compute_returns_eigen.h"
 #include "compute_var.h"
@@ -27,17 +27,17 @@ using namespace Eigen;
 using namespace std;
 
 
-double CVaRHistorical(priceData data) {
+double CVaRHistorical(priceData rawPrices, weightData weights, double alphatest) {
     // Remove lines with missing values
-    size_t n(data.size() - 1);
-    size_t m(data[0].size() - 1);
+    size_t n(rawPrices.size() - 1);
+    size_t m(rawPrices[0].size() - 1);
 
     Mat _prices;
     _prices.resize(m,Vec(n));
 
     for(size_t i = 1;i < n+1;++i){
-        for(size_t j = 1;j < data[i].size();++j){
-            string tmp = data[i][j];
+        for(size_t j = 1;j < rawPrices[i].size();++j){
+            string tmp = rawPrices[i][j];
             if(tmp.empty()){
                 _prices[j-1][i-1] = 99999.;
             }
@@ -47,10 +47,10 @@ double CVaRHistorical(priceData data) {
         }
     }
 
-    vector<string> indexNames(data[0].size() - 1);
+    vector<string> indexNames(rawPrices[0].size() - 1);
 
-    for(size_t i = 1;i < data[0].size();++i){
-        indexNames[i-1] = data[0][i];
+    for(size_t i = 1;i < rawPrices[0].size();++i){
+        indexNames[i-1] = rawPrices[0][i];
     }
 
 		// Remove missing values to compute trailling returns
@@ -68,29 +68,21 @@ double CVaRHistorical(priceData data) {
     std::shared_ptr<ComputeReturn> cr(new ComputeReturn(prices,1,windowsize,true));
 
     // create portfolio
-	double a = double(1./m);
-	std::vector<double> weights{a,a}; //initialization. Equi-weighted asset for mere convenience
-	Ptf _ptf;
-	for(size_t i = 0;i < m;++i){
+  	Ptf _ptf;
+  	for(size_t i = 0;i < m;++i){
         shared_ptr<Instrument> instrument(new DeltaOne());
         auto p = std::make_pair(i,instrument);
-		_ptf.push_back(p);
-	}
-	shared_ptr<Portfolio> ptf(new Portfolio(_ptf, weights, cr, false, 1.e+07));
+		    _ptf.push_back(p);
+    }
+	  shared_ptr<Portfolio> ptf(new Portfolio(_ptf, weights, cr, false, 1.e+07));
 
     HistoricalVaR model;
 
-    double alphatest = .95; // set alpha level, example 0.9 for 95% CVaR
-
     // CVaRhistorical
     model.setAlpha(1.0-alphatest);
-    double CVaRHistorical = model(0,ptf->getReturns()); 
-    cout << "CVaRHistorical: " << CVaRHistorical << endl;
+    double CVaRHistorical = model(0,ptf->getReturns());
 
     return CVaRHistorical;
-
-    } 
-
 }
 
-
+}
