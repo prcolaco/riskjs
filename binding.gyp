@@ -15,6 +15,7 @@
         'src/var_model.cpp'
       ],
       'include_dirs': [
+        '.',
         'include',
         'include/eigen3'
       ],

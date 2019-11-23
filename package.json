@@ -1,10 +1,9 @@
 {
   "name": "riskjs",
   "description": "Risk lib for JS based on calvin456/VaR C++ code",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/vigor-ish/riskjs",
   "main": "index.js",
-  "gypfile": true,
   "scripts": {
     "build": "node-gyp rebuild",
     "clean": "node-gyp clean",
