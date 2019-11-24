@@ -54,16 +54,21 @@ double CVaRHistorical(priceData rawPrices, weightData weights, double alphatest)
     }
 
 		// Remove missing values to compute trailling returns
-    // Asynchornous time series. Shift to the next value
     Mat prices;
     prices.resize(m,Vec(0));
 
-		for(size_t i = 0;i < _prices.size();++i){
-	        for(size_t j = 0;j < _prices[i].size();++j){
-	            if(!((_prices[i][j] == 99999) || (_prices[i][j] == 0)))
-	                prices[i].push_back(_prices[i][j]);
-	        }
-		}
+    bool goodrow = true;
+    for(size_t j = 0;j < _prices[0].size();++j){
+        for(size_t i = 0;i < _prices.size();++i){
+            if((_prices[i][j] == 99999) || (_prices[i][j] == 0))
+                goodrow = false;
+        }
+        if (goodrow)
+            for(size_t i = 0;i < _prices.size();++i){
+                prices[i].push_back(_prices[i][j]);
+            }
+            goodrow = true;
+        }
     unsigned int windowsize = prices[0].size()-2;
     std::shared_ptr<ComputeReturn> cr(new ComputeReturn(prices,1,windowsize,true));
 
